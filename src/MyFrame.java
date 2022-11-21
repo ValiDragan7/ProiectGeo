@@ -12,7 +12,6 @@ public class MyFrame extends JFrame implements ActionListener {
     JButton button7;
     JButton button8;
     JButton button9;
-    JPanel textField= new JPanel();
     MyFrame(){
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -42,8 +41,10 @@ public class MyFrame extends JFrame implements ActionListener {
 
         button4 = new JButton("Problema 4");
         button4.setFocusable(false);
+        button4.setBackground(Color.cyan);
         button4.setFont(new Font("Ariel", Font.BOLD,20));
-        button4.setForeground(new Color(255,0,0));
+        button4.setForeground(new Color(76,115,38));
+        button4.addActionListener(this);
 
         button5 = new JButton("Problema 5");
         button5.setFocusable(false);
@@ -94,7 +95,10 @@ public class MyFrame extends JFrame implements ActionListener {
             this.dispose();
             new Problema2GUI();
         }
-        
+        if(e.getSource()==button4){
+            this.dispose();
+            new Problema4GUI();
+        }
     }
     
 }
