@@ -57,27 +57,10 @@ public class Problema4 {
     public String mtoString(){
         return "M("+m.getX()+","+m.getY()+")";
     }
-    public void reducerePuncte(){
-        int xs=(puncte[0].getX()+puncte[3].getX()+puncte[6].getX())/3;
-        int ys=(puncte[0].getY()+puncte[3].getY()+puncte[6].getY())/3;
-        m.setX(m.getX()-xs);
-        m.setY(m.getY()-ys);
-        for(int i=0;i<puncte.length;i++){
-            puncte[i].setX(puncte[i].getX()-xs);
-            puncte[i].setY(puncte[i].getY()-ys);
-        }
-    }
-    public void reducereM(){
-        int xs=(puncte[0].getX()+puncte[3].getX()+puncte[6].getX())/3;
-        int ys=(puncte[0].getY()+puncte[3].getY()+puncte[6].getY())/3;
-        m.setX(m.getX()-xs);
-        m.setY(m.getY()-ys);
-    }
-    public void AdM(){
-        int xs=(puncte[0].getX()+puncte[3].getX()+puncte[6].getX())/3;
-        int ys=(puncte[0].getY()+puncte[3].getY()+puncte[6].getY())/3;
-        m.setX(m.getX()+xs);
-        m.setY(m.getY()+ys);
+    private boolean equal(Point2D a, Point2D b){
+        if(a.getX()==b.getX()&& a.getY()==b.getY()){
+            return true;
+        }else return false;
     }
     //sortare si cautare binara
     private void merge(Point2D a[],int st,int mid,int dr){
@@ -143,6 +126,14 @@ public class Problema4 {
     }
 
     public void rezSolutie(){
+        char c= 'A';
+        for(int i=0;i<puncte.length;i++){
+            if(equal(m, puncte[i])==true){
+                JOptionPane.showMessageDialog(null, "M are aceleasi coordonate ca si punctul "+ c);
+                return;
+            }
+            else c++;
+        }
 
         Cadran();
         
@@ -154,6 +145,7 @@ public class Problema4 {
                      break;}
             if(m.getCadran()<puncte[i].getCadran()){
                 break;}
+        
         }
         if(i==puncte.length){
             int xs=(m.getX()+puncte[0].getX()+puncte[i-1].getX())/3;

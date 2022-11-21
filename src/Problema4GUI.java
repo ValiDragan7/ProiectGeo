@@ -40,7 +40,7 @@ public class Problema4GUI extends JFrame implements ActionListener{
         puncteTextArea.setWrapStyleWord(true);
 
         punctMArea= new JTextArea(problema4.mtoString());
-        punctMArea.setBounds(100,75,100,35);
+        punctMArea.setBounds(100,75,150,35);
         punctMArea.setFont(new Font("Calibri", Font.PLAIN,30));
         punctMArea.setBackground(new Color(245,189,8));
         punctMArea.setEditable(false);
