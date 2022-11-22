@@ -50,7 +50,9 @@ public class Point2D {
             return 2;
         else if (x < 0 && y <= 0)
             return 3;
-        else
+        else if (x >= 0 && y < 0)
             return 4;
+
+        return 0;
     }
 }

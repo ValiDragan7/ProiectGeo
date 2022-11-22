@@ -1,21 +1,19 @@
 import javax.swing.JOptionPane;
 
 public class Problema4 {
-    private Point2D[] puncte = new Point2D[7];
-    private Point2D m;
+    private Point2D[] puncte = new Point2D[10];
+    private Point2D m = new Point2D(0, 0);
     private Point2D pOrig = new Point2D(0, 0);
 
     Problema4() {
-        puncte[0] = new Point2D(-3, 2);
-        puncte[1] = new Point2D(-1, 1);
-        puncte[2] = new Point2D(-4, 5);
-        puncte[3] = new Point2D(-2, 6);
-        puncte[4] = new Point2D(2, 1);
-        puncte[5] = new Point2D(4, 3);
-        puncte[6] = new Point2D(2, 6);
-
-        m = new Point2D(Integer.parseInt(JOptionPane.showInputDialog("X[m]=")),
-                (Integer.parseInt(JOptionPane.showInputDialog("Y[m]="))));
+        puncte[1] = new Point2D(-3, 2);
+        puncte[2] = new Point2D(-1, 1);
+        puncte[3] = new Point2D(-4, 5);
+        puncte[4] = new Point2D(-2, 6);
+        puncte[5] = new Point2D(2, 1);
+        puncte[6] = new Point2D(4, 3);
+        puncte[7] = new Point2D(2, 6);
+        puncte[8] = new Point2D(0, 0);
     }
 
     // additions
@@ -25,13 +23,13 @@ public class Problema4 {
 
     private void Cadran() {
         m.setCadran();
-        for (int i = 0; i < puncte.length; i++) {
+        for (int i = 1; i < puncte.length - 1; i++) {
             puncte[i].setCadran();
         }
     }
 
     public void printArray() {
-        for (int i = 0; i < puncte.length; i++) {
+        for (int i = 1; i < puncte.length - 1; i++) {
             System.out.println(puncte[i].toStringPunct());
         }
         System.out.println("\ncu M" + m.toStringPunct());
@@ -57,9 +55,9 @@ public class Problema4 {
 
     public String puncteToString() {
         char c = 'A';
-        String s = 'A' + puncte[0].toStringPunct() + " ";
+        String s = 'A' + puncte[1].toStringPunct() + " ";
         c++;
-        for (int i = 1; i < puncte.length; i++, c++) {
+        for (int i = 2; i < puncte.length - 2; i++, c++) {
             s = s + c + puncte[i].toStringPunct() + " ";
         }
         return s;
@@ -145,8 +143,9 @@ public class Problema4 {
 
     public void rezSolutie() {
         char c = 'A';
-        for (int i = 0; i < puncte.length; i++) {
-            if (equal(m, puncte[i]) == true) {
+        puncte[puncte.length - 2] = m;
+        for (int i = 0; i < puncte.length - 3; i++) {
+            if (equal(m, puncte[i + 1]) == true) {
                 JOptionPane.showMessageDialog(null, "M are aceleasi coordonate ca si punctul " + c);
                 return;
             } else
@@ -155,51 +154,25 @@ public class Problema4 {
 
         Cadran();
 
-        sortareBinara(puncte, 0, puncte.length - 1);
+        sortareBinara(puncte, 1, puncte.length - 2);
+        puncte[0] = puncte[puncte.length - 3];
+        puncte[puncte.length - 1] = puncte[0];
         int i;
-        for (i = 0; i < puncte.length; i++) {
+        for (i = 1; i < puncte.length - 1; i++) {
             if (m.getCadran() == puncte[i].getCadran()) {
-                if (Determinant(m, pOrig, puncte[i]) < 0)
+                if (Determinant(m, pOrig, puncte[i]) == 0)
                     break;
             }
-            if (m.getCadran() < puncte[i].getCadran()) {
-                break;
-            }
-
         }
-        if (i == puncte.length) {
-            int xs = (m.getX() + puncte[0].getX() + puncte[i - 1].getX()) / 3;
-            int ys = (m.getY() + puncte[0].getY() + puncte[i - 1].getY()) / 3;
-            centruDeGreutate(m, puncte[0], puncte[i - 1], xs, ys);
-            if (Determinant(m, puncte[0], puncte[i - 1]) > 0)
-                JOptionPane.showMessageDialog(null, "M se afla in exterior!");
-            else if (Determinant(m, puncte[0], puncte[i - 1]) < 0)
-                JOptionPane.showMessageDialog(null, "M se afla in interior");
-            else
-                JOptionPane.showMessageDialog(null, "M se afla pe frontiera");
-            redCentruDeGreutate(m, puncte[0], puncte[i - 1], xs, ys);
-        } else if (i == 0) {
-            int xs = (m.getX() + puncte[i].getX() + puncte[puncte.length - 1].getX()) / 3;
-            int ys = (m.getY() + puncte[i].getY() + puncte[puncte.length - 1].getY()) / 3;
-            centruDeGreutate(m, puncte[i], puncte[puncte.length - 1], xs, ys);
-            if (Determinant(m, puncte[i], puncte[puncte.length - 1]) > 0)
-                JOptionPane.showMessageDialog(null, "M se afla in exterior!");
-            else if (Determinant(m, puncte[i], puncte[puncte.length - 1]) < 0)
-                JOptionPane.showMessageDialog(null, "M se afla in interior");
-            else
-                JOptionPane.showMessageDialog(null, "M se afla pe frontiera");
-            redCentruDeGreutate(m, puncte[i], puncte[puncte.length - 1], xs, ys);
-        } else {
-            int xs = (m.getX() + puncte[i].getX() + puncte[i - 1].getX()) / 3;
-            int ys = (m.getY() + puncte[i].getY() + puncte[i - 1].getY()) / 3;
-            centruDeGreutate(m, puncte[i], puncte[i - 1], xs, ys);
-            if (Determinant(m, puncte[i], puncte[i - 1]) > 0)
-                JOptionPane.showMessageDialog(null, "M se afla in exterior!");
-            else if (Determinant(m, puncte[i], puncte[i - 1]) < 0)
-                JOptionPane.showMessageDialog(null, "M se afla in interior");
-            else
-                JOptionPane.showMessageDialog(null, "M se afla pe frontiera");
-            redCentruDeGreutate(m, puncte[i], puncte[i - 1], xs, ys);
-        }
+        int xs = (m.getX() + puncte[i + 1].getX() + puncte[i - 1].getX()) / 3;
+        int ys = (m.getY() + puncte[i + 1].getY() + puncte[i - 1].getY()) / 3;
+        centruDeGreutate(puncte[i], puncte[i + 1], puncte[i - 1], xs, ys);
+        if (Determinant(puncte[i], puncte[i + 1], puncte[i - 1]) > 0)
+            JOptionPane.showMessageDialog(null, "M se afla in exterior!");
+        else if (Determinant(puncte[i], puncte[i + 1], puncte[i - 1]) < 0)
+            JOptionPane.showMessageDialog(null, "M se afla in interior");
+        else
+            JOptionPane.showMessageDialog(null, "M se afla pe frontiera");
+        redCentruDeGreutate(puncte[i], puncte[i + 1], puncte[i - 1], xs, ys);
     }
 }

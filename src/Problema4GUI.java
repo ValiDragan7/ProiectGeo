@@ -16,7 +16,7 @@ public class Problema4GUI extends JFrame implements ActionListener {
         my = new JTextField();
         my.setBounds(100, 200, 100, 50);
         my.setFont(new Font("Calibri", Font.PLAIN, 20));
-        my.setBackground(new Color(236, 150, 242));
+        my.setBackground(new Color(175, 201, 126));
         mx = new JTextField();
         mx.setBackground(new Color(236, 150, 242));
         mx.setBounds(100, 130, 100, 50);
@@ -100,6 +100,8 @@ public class Problema4GUI extends JFrame implements ActionListener {
         }
         if (e.getSource() == rezButton) {
             problema4.rezSolutie();
+            this.dispose();
+            new Problema4GUI();
         }
         if (e.getSource() == inapoiButton) {
             this.dispose();
